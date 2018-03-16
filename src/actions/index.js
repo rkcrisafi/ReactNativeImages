@@ -11,10 +11,7 @@ const receiveImages = (imgs) => {
   };
 };
 
-export const fetchImages = (query, page = 1) => dispatch => (
-  APIUtil.fetchImages(query, page)
-  .then(images => {
-    dispatch(receiveImages(images));
-    // return images;
-  })
+export const fetchImages = (query) => dispatch => (
+  APIUtil.fetchImages(query)
+  .then(images => dispatch(receiveImages(images)))
 );

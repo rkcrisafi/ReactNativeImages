@@ -9,7 +9,7 @@ import ImageItem from './image_item';
 
 
 class ImageList extends React.Component {
-  state = { page: 1, text: '' };
+  state = { text: '' };
 
   componentWillMount() {
   const ds = new ListView.DataSource({
@@ -20,14 +20,14 @@ class ImageList extends React.Component {
 }
 
   findImages(e) {
-    this.props.fetchImages(e.nativeEvent.text, this.state.page)//.then(() => this.setState({ page: this.state.page + 1, text: e.nativeEvent.text }));
+    this.props.fetchImages(e.nativeEvent.text)
   }
 
   loadMoreImages() {
-    const { page, text } = this.state;
-    if (text) {
-      this.props.fetchImages(text, page).then(() => this.setState({ page: page + 1, text: text }));
-    }
+    // const { page, text } = this.state;
+    // if (text) {
+    //   this.props.fetchImages(text, page).then(() => this.setState({ page: page + 1, text: text }));
+    // }
   }
 
   render () {
@@ -49,9 +49,7 @@ class ImageList extends React.Component {
           <CardSection>
             <FlatList style={{
               flexDirection: 'column',
-              height: screenHeight - 150 }}
-            
-            >
+              height: screenHeight - 150 }}>
               {hits.map((hit, idx) => (
                 <ImageItem key={ idx } image={ hit }/>
               ))}
