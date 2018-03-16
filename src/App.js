@@ -1,16 +1,18 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducers from './reducers';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
+import reducers from './reducers/index';
 import Header from './components/header';
 import ImageList from './components/image_list';
 
 const App = () => {
+  const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
   return (
-    <Provider store={createStore(reducers)}>
+    <Provider store={store}>
       <View style={{ flex: 1 }}>
-        <Header headerText="PIXABAY Images" />
+        <Header headerText="PIXABAY" />
         <ImageList />
       </View>
     </Provider>

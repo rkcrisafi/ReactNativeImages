@@ -1,26 +1,18 @@
-import APIUtil from './util/APIUtil';
+import * as APIUtil from '../APIUtil';
 
 export const FETCH_IMAGES = 'FETCH_IMAGES';
-export const FETCH_IMAGE = 'FETCH_IMAGE';
 
-const receiveImages = (images) => {
+const receiveImages = (imgs) => {
+  let images = { total: imgs.total,
+    hits: imgs.hits};
+  debugger
   return {
     type: FETCH_IMAGES,
     images
   };
 };
 
-const receiveImage = (image) => {
-  return {
-    type: FETCH_IMAGE,
-    image
-  };
-};
-
-const fetchImages = () => dispatch => (
-  APIUtil.fetchImages().then(images => dispatch(receiveImages(images)))
-);
-
-const fetchImage = (imageId) => dispatch => (
-  APIUtil.fetchImage().then(image => dispatch(receiveImage(image)))
+export const fetchImages = (query) => dispatch => (
+  APIUtil.fetchImages(query)
+  .then(images => dispatch(receiveImages(images)))
 );

@@ -1,20 +1,50 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import axios from 'axios';
+import { View, Text, TextInput } from 'react-native';
+import { connect } from 'react-redux';
+import { fetchImages } from '../actions/index';
+import Input from './input';
+import CardSection from './card_section';
+import Card from './card';
+import ImageItem from './image_item';
+
 
 class ImageList extends React.Component {
+  state = { page: 1 };
 
-  componentWillMount () {
-    axios.get('https://rallycoding.herokuapp.com/api/muisc_albums').then(response => console.log(response));
+  findImages(e) {
+    this.props.fetchImages(e.nativeEvent.text);
   }
 
   render () {
     return (
       <View>
-        <Text>Image List!!!</Text>
+        <Card>
+          <CardSection>
+            <Input
+              placeholder="Search All"
+              onSubmitEditing={(e) => this.findImages(e)}
+              label="PIXABAY"
+            />
+          </CardSection>
+          <Text>{this.props.images.total}</Text>
+          <CardSection>
+
+          </CardSection>
+
+          <Text>Image List!!!</Text>
+        </Card>
       </View>
     );
   }
 }
 
-export default ImageList;
+const mapStateToProps = state => {
+  return {
+    images: state.images
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { fetchImages }
+)(ImageList);

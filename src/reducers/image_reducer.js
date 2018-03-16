@@ -1,6 +1,8 @@
-const INITIAL_STATE = { total: 0, hits: [] }
+import { FETCH_IMAGES } from '../actions/index';
 
-export const (state, action) => {
+const INITIAL_STATE = { total: null, hits: [] };
+
+const ImageReducer = (state = INITIAL_STATE, action) => {
   switch(action.type) {
     case FETCH_IMAGES:
       return {
@@ -9,6 +11,8 @@ export const (state, action) => {
         hits: action.images.hits
       }
     default:
-      state;
+      return state;
   }
 };
+
+export default ImageReducer;
