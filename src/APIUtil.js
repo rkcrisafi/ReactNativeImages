@@ -3,7 +3,8 @@ const URL = `https://pixabay.com/api/?key=${API_KEY}&q=`;
 
 //&page=${pageNumber}
 
-export const fetchImages = (query) => {
-  return fetch(`${URL}${encodeURIComponent(query)}`)
+export const fetchImages = (query, page) => {
+  console.log(`${URL}${encodeURIComponent(query)}&page=${page}`);
+  return fetch(`${URL}${encodeURIComponent(query)}&page=${page}`)
   .then(response => response.json());
 };
