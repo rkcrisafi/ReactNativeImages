@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, ListView, ScrollView, Dimensions, FlatList } from 'react-native';
+import { View, Text, TextInput, ListView, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchImages, clearImages } from '../actions/index';
 import Input from './input';
@@ -33,6 +33,10 @@ class ImageList extends React.Component {
     }
   }
 
+  showMore = (item) => {
+    this.props.navigation.navigate('ImagePage', item);
+  }
+
   render () {
     const { total, hits } = this.props.images;
     let screenHeight = Dimensions.get('window').height;
@@ -49,13 +53,13 @@ class ImageList extends React.Component {
           </CardSection>
           { total > 0 ? <Text style={{ marginTop: 5, marginBottom: 5, marginLeft: 10 }}>
             {total} { total > 1 ? "Items" : "Item"}
-          </Text> : null }
+          </Text> : <Text> </Text> }
           <CardSection>
             <FlatList style={{
               flexDirection: 'column',
               height: screenHeight - 150 }}
               data={hits}
-              renderItem={({item}) => <ImageItem key={ item.id} image={ item }/>}
+              renderItem={({item}) => <TouchableOpacity onPress={() => this.showMore(item)} underlayColor="gray"><ImageItem key={ item.id } image={ item }/></TouchableOpacity>}
               onEndReachedThreshold={0}
               onEndReached={() => this.loadMoreImages()}
             />
